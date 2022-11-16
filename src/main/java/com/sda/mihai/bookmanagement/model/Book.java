@@ -1,6 +1,7 @@
 package com.sda.mihai.bookmanagement.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "book")
@@ -17,12 +18,14 @@ public class Book {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "author_id")
-    private Integer author_id;
 
-    @OneToMany
+
+    @ManyToOne
     @JoinColumn(name = "author_id")
     private Author author;
+
+    @OneToMany(mappedBy = "book")
+    private List<Review> reviews;
 
     public Book(){
 
@@ -31,7 +34,6 @@ public class Book {
     public Book(String title, String description, Integer author_id) {
         this.title = title;
         this.description = description;
-        this.author_id = author_id;
     }
 
     public String getTitle() {
@@ -50,20 +52,13 @@ public class Book {
         this.description = description;
     }
 
-    public Integer getAuthor_id() {
-        return author_id;
-    }
-
-    public void setAuthor_id(Integer author_id) {
-        this.author_id = author_id;
-    }
 
     @Override
     public String toString() {
         return "Book{" +
                 "title='" + title + '\'' +
                 ", description='" + description + '\'' +
-                ", author_id=" + author_id +
+                ", author_id=" +
                 '}';
     }
 }

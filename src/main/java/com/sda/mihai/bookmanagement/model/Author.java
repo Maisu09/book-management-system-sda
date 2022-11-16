@@ -18,8 +18,9 @@ public class Author {
     @Column(name = "last_name")
     private String lastName;
 
-    @OneToMany(mappedBy = "author")
-    private ArrayList<Book> books;
+    // not required in the current specification
+//    @OneToMany(mappedBy = "author")
+//    private ArrayList<Book> books;
 
     public Author() {
 
