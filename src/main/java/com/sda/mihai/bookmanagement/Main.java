@@ -1,5 +1,10 @@
 package com.sda.mihai.bookmanagement;
 
+import com.sda.mihai.bookmanagement.controller.AuthorController;
+import com.sda.mihai.bookmanagement.repository.AuthorRepository;
+import com.sda.mihai.bookmanagement.repository.AuthorRepositoryImpl;
+import com.sda.mihai.bookmanagement.service.AuthorService;
+import com.sda.mihai.bookmanagement.service.AuthorServiceImpl;
 import com.sda.mihai.bookmanagement.utils.SessionManager;
 
 import java.util.Scanner;
@@ -8,6 +13,8 @@ public class Main {
     public static void main(String[] args) {
 
         SessionManager.getSessionFactory();
+
+        AuthorController authorController = new AuthorController(new AuthorServiceImpl(new AuthorRepositoryImpl()));
 
         Scanner scanner = new Scanner(System.in);
         UserOption.printAllOptions();
@@ -29,7 +36,7 @@ public class Main {
 
             switch (userOption) {
                 case CREATE_AUTHOR:
-                    System.out.println("Not implemented");
+                    authorController.createAuthor();
                     break;
                 case EXIT:
                     System.out.println("Goodbye!");
