@@ -13,6 +13,9 @@ public interface AuthorService {
 
     void updateAuthor(int authorId, String firstName, String lastName) throws InvalidParameterException, EntityNotFoundException;
 
+    void deleteAuthor(int authorId) throws EntityNotFoundException;
+
     List<Author> getAllAuthors();
+
 
 }

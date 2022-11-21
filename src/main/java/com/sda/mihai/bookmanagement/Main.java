@@ -1,9 +1,8 @@
 package com.sda.mihai.bookmanagement;
 
 import com.sda.mihai.bookmanagement.controller.AuthorController;
-import com.sda.mihai.bookmanagement.repository.AuthorRepository;
+import com.sda.mihai.bookmanagement.menu.UserOption;
 import com.sda.mihai.bookmanagement.repository.AuthorRepositoryImpl;
-import com.sda.mihai.bookmanagement.service.AuthorService;
 import com.sda.mihai.bookmanagement.service.AuthorServiceImpl;
 import com.sda.mihai.bookmanagement.utils.SessionManager;
 
@@ -35,6 +34,9 @@ public class Main {
                     break;
                 case UPDATE_AUTHOR:
                     authorController.updateAuthor();
+                    break;
+                case DELETE_AUTHOR:
+                    authorController.deleteAuthor();
                     break;
                 case EXIT:
                     System.out.println("Goodbye!");
