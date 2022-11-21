@@ -82,4 +82,15 @@ public class BaseRepositoryImpl<T> implements BaseRepository<T> {
             }
         }
     }
+
+    @Override
+    public List<T> findAll() {
+        try{
+            Session session = SessionManager.getSessionFactory().openSession();
+            return session.createQuery("FROM " + entityClass.getName(), entityClass).list();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
 }

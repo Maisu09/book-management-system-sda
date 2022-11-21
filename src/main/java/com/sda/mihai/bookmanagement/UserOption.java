@@ -1,7 +1,10 @@
 package com.sda.mihai.bookmanagement;
 
+
 public enum UserOption {
     CREATE_AUTHOR(1, "Create author"),
+    SHOW_ALL_AUTHORS(2, "Display all authors"),
+    UPDATE_AUTHOR(3, "Update author"),
     EXIT(99, "Exit"),
     UNKNOWN(100, "Unknown option");
 
@@ -26,13 +29,12 @@ public enum UserOption {
             if (value != UNKNOWN) {
                 System.out.println(value.getNumericOption() + " - " + value.getDisplayValue());
             }
-
         }
     }
 
-    public static UserOption findUserOption(int numericValue) {
-        for(UserOption value : values()) {
-            if (value.getNumericOption() == numericValue) {
+    public static UserOption findUserOption (int numericValue) {
+        for (UserOption value : values()){
+            if(value.getNumericOption() == numericValue) {
                 return value;
             }
         }

@@ -3,8 +3,9 @@ package com.sda.mihai.bookmanagement.controller;
 import com.sda.mihai.bookmanagement.model.Author;
 import com.sda.mihai.bookmanagement.repository.AuthorRepository;
 import com.sda.mihai.bookmanagement.service.AuthorService;
+import com.sda.mihai.bookmanagement.service.exception.EntityNotFoundException;
 import com.sda.mihai.bookmanagement.service.exception.InvalidParametreException;
-
+import java.security.InvalidParameterException;
 import java.util.Scanner;
 
 public class AuthorController {
@@ -16,20 +17,44 @@ public class AuthorController {
     }
 
     public void createAuthor() {
-
         try {
-            System.out.println("Please insert a author first name: ");
+            System.out.println("Please insert author first name:");
             String firstName = scanner.nextLine();
-            System.out.println("Please insert a author last name: ");
-
+            System.out.println("Please insert author last name:");
             String lastName = scanner.nextLine();
-            authorService.createAuthor(firstName, lastName);
 
-        } catch (InvalidParametreException e) {
+            authorService.createAuthor(firstName, lastName);
+            System.out.println("Author was created!");
+        } catch (InvalidParameterException e) {
             System.out.println(e.getMessage());
-        } catch (Exception ex) {
+        } catch (Exception e) {
             System.out.println("Internal server error!");
         }
+    }
 
+    public void updateAuthor() {
+        try {
+            System.out.println("Please insert an author id!");
+            int authorId = Integer.parseInt(scanner.nextLine());
+            System.out.println("Please insert author first name:");
+            String firstName = scanner.nextLine();
+            System.out.println("Please insert author last name:");
+            String lastName = scanner.nextLine();
+
+            authorService.updateAuthor(authorId, firstName, lastName);
+            System.out.println("Author was updated!");
+        } catch (EntityNotFoundException | InvalidParameterException e) {
+            System.out.println(e.getMessage());
+        } catch (NumberFormatException e) {
+            System.out.println("Provided author id is not a number");
+        } catch (Exception e) {
+            System.out.println("Internal server error");
+        }
+    }
+
+    public void showAllAuthors() {
+        authorService.getAllAuthors().stream().forEach(author ->
+                System.out.println("Author with id: " + author.getId() + " first name: " + author.getFirstName() + " last name: " + author.getLastName())
+        );
     }
 }

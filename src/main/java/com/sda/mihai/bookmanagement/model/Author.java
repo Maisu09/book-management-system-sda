@@ -1,8 +1,7 @@
 package com.sda.mihai.bookmanagement.model;
 
-
 import javax.persistence.*;
-import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "author")
@@ -11,23 +10,20 @@ public class Author {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
-
     @Column(name = "first_name")
     private String firstName;
-
     @Column(name = "last_name")
     private String lastName;
 
-    // not required in the current specification
-//    @OneToMany(mappedBy = "author")
-//    private ArrayList<Book> books;
+    // Not required in the current specification
+
+    //    @OneToMany (mappedBy = "author")
+    //    private List<Book> books;
 
     public Author() {
-
     }
 
     public Author(String firstName, String lastName) {
-        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
     }
@@ -52,8 +48,8 @@ public class Author {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setLastName(String last_Name) {
+        this.lastName = last_Name;
     }
 
     @Override
@@ -61,7 +57,7 @@ public class Author {
         return "Author{" +
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
+                ", last_Name='" + lastName + '\'' +
                 '}';
     }
 }
