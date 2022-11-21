@@ -7,6 +7,7 @@ import com.sda.mihai.bookmanagement.repository.BookRepository;
 import com.sda.mihai.bookmanagement.service.exception.EntityNotFoundException;
 
 import java.security.InvalidParameterException;
+import java.util.List;
 import java.util.Optional;
 
 public class BookServiceImpl implements BookService {
@@ -39,5 +40,10 @@ public class BookServiceImpl implements BookService {
         book.setAuthor(author);
         bookRepository.create(book);
 
+    }
+
+    @Override
+    public List<Book> getAllBooks() {
+        return bookRepository.findAll();
     }
 }
