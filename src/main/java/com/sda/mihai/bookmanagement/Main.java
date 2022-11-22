@@ -2,10 +2,13 @@ package com.sda.mihai.bookmanagement;
 
 import com.sda.mihai.bookmanagement.controller.AuthorController;
 import com.sda.mihai.bookmanagement.controller.BookController;
+import com.sda.mihai.bookmanagement.controller.ReviewController;
 import com.sda.mihai.bookmanagement.menu.UserOption;
 import com.sda.mihai.bookmanagement.repository.AuthorRepositoryImpl;
 import com.sda.mihai.bookmanagement.repository.BookRepositoryImpl;
+import com.sda.mihai.bookmanagement.repository.BookRepositoryReviewImpl;
 import com.sda.mihai.bookmanagement.service.AuthorServiceImpl;
+import com.sda.mihai.bookmanagement.service.BookReviewServiceImpl;
 import com.sda.mihai.bookmanagement.service.BookServiceImpl;
 import com.sda.mihai.bookmanagement.utils.SessionManager;
 
@@ -16,6 +19,7 @@ public class Main {
         SessionManager.getSessionFactory();
         AuthorController authorController = new AuthorController(new AuthorServiceImpl(new AuthorRepositoryImpl()));
         BookController bookController = new BookController(new BookServiceImpl(new BookRepositoryImpl(), new AuthorRepositoryImpl()));
+        ReviewController reviewController = new ReviewController(new BookReviewServiceImpl(new BookRepositoryReviewImpl(), new BookRepositoryImpl()));
         Scanner scanner = new Scanner(System.in);
 
         UserOption userOption;
@@ -45,8 +49,15 @@ public class Main {
                 case CREATE_BOOK:
                     bookController.createBook();
                     break;
+                case UPDATE_BOOK:
+                    bookController.updateBook();
+                case DELETE_BOOK:
+                    bookController.deleteBook();
                 case VIEW_ALL_BOOKS:
                     bookController.showAllBooks();
+                    break;
+                case CREATE_REVIEW:
+                    reviewController.createReview();
                     break;
                 case EXIT:
                     System.out.println("Goodbye!");

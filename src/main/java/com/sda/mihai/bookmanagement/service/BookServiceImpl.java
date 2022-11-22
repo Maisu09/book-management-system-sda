@@ -5,10 +5,12 @@ import com.sda.mihai.bookmanagement.model.Book;
 import com.sda.mihai.bookmanagement.repository.AuthorRepository;
 import com.sda.mihai.bookmanagement.repository.BookRepository;
 import com.sda.mihai.bookmanagement.service.exception.EntityNotFoundException;
+import com.sda.mihai.bookmanagement.service.exception.InvalidParametreException;
 
 import java.security.InvalidParameterException;
 import java.util.List;
 import java.util.Optional;
+import java.util.Scanner;
 
 public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
@@ -22,10 +24,10 @@ public class BookServiceImpl implements BookService {
     @Override
     public void createBook(String title, String description, int authorId) throws EntityNotFoundException {
         if (title == null || title.isBlank() || title.length() < 4) {
-            throw new InvalidParameterException("Provided value for first name: " + title + " is invalid");
+            throw new InvalidParameterException("Provided value for title: " + title + " is invalid");
         }
         if (description == null || description.isBlank() || description.length() < 3) {
-            throw new InvalidParameterException("Provided value for first name: " + description + " is invalid");
+            throw new InvalidParameterException("Provided value for description: " + description + " is invalid");
         }
         if (authorId < 1) {
             throw new InvalidParameterException("Provided value for author id: " + authorId + " is invalid");
@@ -41,6 +43,50 @@ public class BookServiceImpl implements BookService {
         bookRepository.create(book);
 
     }
+
+    @Override
+    public void updateBook(int bookId, int newBookId ,String title, String description) throws InvalidParametreException, EntityNotFoundException {
+        if (bookId <1 ) {
+            throw new InvalidParametreException("The provided book id: " + bookId + " is invalid!");
+
+        }
+        if (newBookId < 1) {
+            throw new InvalidParametreException("The provided book id: " + newBookId + " is invalid!");
+        }
+        if (title == null || title.isBlank() || title.length() < 4) {
+            throw new InvalidParametreException("Provided value for title: " + title + " is invalid");
+        }
+        if (description == null || description.isBlank() || description.length() < 10){
+            throw new InvalidParametreException("Provided value for description: " + title + " is invalid");
+        }
+        Optional<Book> bookOptional = bookRepository.findById(bookId);
+        if(bookOptional.isEmpty()) {
+            throw new EntityNotFoundException("Book with id: " + bookId + " was not found");
+        }
+
+        Book book = bookOptional.get();
+        book.setTitle(title);
+        book.setDescription(description);
+        book.setId(newBookId);
+        bookRepository.update(book);
+    }
+
+    @Override
+    public void deleteBook(int bookId) throws EntityNotFoundException, InvalidParameterException {
+        if (bookId < 1) {
+            throw new InvalidParameterException("Provided book id: " + bookId + "is invalid");
+        }
+
+        Optional<Book> bookOptional = bookRepository.findById(bookId);
+        if(bookOptional.isEmpty()){
+            throw new EntityNotFoundException("Book with id: " + bookId + " was not found!");
+        }
+        Book book = bookOptional.get();
+
+        bookRepository.delete(book);
+
+    }
+
 
     @Override
     public List<Book> getAllBooks() {
