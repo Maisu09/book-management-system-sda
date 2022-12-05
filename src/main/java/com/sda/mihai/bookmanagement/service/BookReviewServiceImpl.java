@@ -5,8 +5,10 @@ import com.sda.mihai.bookmanagement.model.Review;
 import com.sda.mihai.bookmanagement.repository.BookRepository;
 import com.sda.mihai.bookmanagement.repository.BookReviewRepository;
 import com.sda.mihai.bookmanagement.service.exception.EntityNotFoundException;
+import com.sda.mihai.bookmanagement.service.exception.InvalidParametreException;
 
 import java.security.InvalidParameterException;
+import java.util.List;
 import java.util.Optional;
 
 public class BookReviewServiceImpl implements BookReviewService {
@@ -31,7 +33,7 @@ public class BookReviewServiceImpl implements BookReviewService {
         }
 
         Optional<Book> bookOptional = bookRepository.findByTitle(bookTitle);
-        if(bookOptional.isEmpty()) {
+        if (bookOptional.isEmpty()) {
             throw new EntityNotFoundException("Book not found for provided title: " + bookTitle);
         }
 
@@ -40,6 +42,22 @@ public class BookReviewServiceImpl implements BookReviewService {
         Review review = new Review(score, comment);
         review.setBook(book);
 
+
         bookReviewRepository.create(review);
+    }
+
+    @Override
+    public List<Review> getReviewByTitle(String title) throws InvalidParametreException {
+        if (title == null || title.isBlank() || title.length() < 3) {
+            throw new InvalidParametreException("Provided title: " + title + " not valid");
+        }
+
+        Optional<Book> bookOptional = bookRepository.findByTitle(title);
+
+
+
+        Book book = bookOptional.get();
+        List<Review> bookReviews = book.getBookReviews();
+        return bookReviews;
     }
 }

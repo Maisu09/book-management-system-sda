@@ -22,6 +22,8 @@ public class Main {
         ReviewController reviewController = new ReviewController(new BookReviewServiceImpl(new BookRepositoryReviewImpl(), new BookRepositoryImpl()));
         Scanner scanner = new Scanner(System.in);
 
+
+
         UserOption userOption;
         do {
             UserOption.printAllOptions();
@@ -58,6 +60,9 @@ public class Main {
                     break;
                 case CREATE_REVIEW:
                     reviewController.createReview();
+                    break;
+                case GET_REVIEW_BY_TITLE:
+                    reviewController.getReviewsByTitle();
                     break;
                 case EXIT:
                     System.out.println("Goodbye!");

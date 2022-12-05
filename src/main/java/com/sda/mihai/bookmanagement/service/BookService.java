@@ -11,7 +11,7 @@ public interface BookService {
 
     void deleteBook(int bookId) throws EntityNotFoundException;
 
-    void updateBook(int bookId, int newBookId, String title, String description) throws InvalidParametreException, EntityNotFoundException;
+    void updateBook(int bookId, int newAuthorId, String title, String description) throws InvalidParametreException, EntityNotFoundException;
     List<Book> getAllBooks();
 
 

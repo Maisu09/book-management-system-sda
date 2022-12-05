@@ -11,6 +11,7 @@ public enum UserOption {
     UPDATE_BOOK(7, "Update book"),
     VIEW_ALL_BOOKS(8, "Display all books"),
     CREATE_REVIEW(9, "Write a review"),
+    GET_REVIEW_BY_TITLE(10, "View all the reviews for a title"),
     EXIT(99, "Exit"),
     UNKNOWN(100, "Unknown option");
 

@@ -45,13 +45,13 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void updateBook(int bookId, int newBookId ,String title, String description) throws InvalidParametreException, EntityNotFoundException {
+    public void updateBook(int bookId, int authorId ,String title, String description) throws InvalidParametreException, EntityNotFoundException {
         if (bookId <1 ) {
             throw new InvalidParametreException("The provided book id: " + bookId + " is invalid!");
 
         }
-        if (newBookId < 1) {
-            throw new InvalidParametreException("The provided book id: " + newBookId + " is invalid!");
+        if (authorId < 1) {
+            throw new InvalidParametreException("The provided book id: " + authorId + " is invalid!");
         }
         if (title == null || title.isBlank() || title.length() < 4) {
             throw new InvalidParametreException("Provided value for title: " + title + " is invalid");
@@ -64,10 +64,14 @@ public class BookServiceImpl implements BookService {
             throw new EntityNotFoundException("Book with id: " + bookId + " was not found");
         }
 
+        Optional<Author> authorOptional = authorRepository.findById(authorId);
         Book book = bookOptional.get();
         book.setTitle(title);
         book.setDescription(description);
-        book.setId(newBookId);
+
+        Author author = authorOptional.get();
+        book.setAuthor(author);
+
         bookRepository.update(book);
     }
 
